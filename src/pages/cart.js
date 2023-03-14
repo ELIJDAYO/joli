@@ -15,6 +15,12 @@ export default function CartScreen() {
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
+  const updateCartHandler = (item, qty) => {
+    // input newQuantity
+    const quantity = Number(qty);
+    // keep other properties of an item?
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+  };
   return (
     <Layout title="Shopping Cart">
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
@@ -54,7 +60,22 @@ export default function CartScreen() {
                         {item.name}
                       </Link>
                     </td>
-                    <td className="p-5 text-right">{item.quantity}</td>
+                    <td className="p-5 text-right text-white">
+                      <select
+                        value={item.quantity}
+                        onChange={(e) =>
+                          updateCartHandler(item, e.target.value)
+                        }
+                      >
+                        {/*deconstract and create arrays from items that contain stock, get keys of the array */}
+                        {[...Array(item.countInStock).keys()].map((x) => (
+                          // convert numbers to option
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </td>{' '}
                     <td className="p-5 text-right">${item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
