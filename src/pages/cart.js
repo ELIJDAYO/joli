@@ -5,8 +5,11 @@ import { useRouter } from 'next/router';
 import { XCircleIcon } from '@heroicons/react/outline';
 import React, { useContext } from 'react';
 import { Store } from 'utils/Store';
-
-export default function CartScreen() {
+// the server the cookie contains no item in the cart, but in the client the cookie contained that.
+// So to fix this issue, go to the cart page here and render this as client side component.
+import dynamic from 'next/dynamic';
+// export default function CartScreen() {
+function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
@@ -110,3 +113,5 @@ export default function CartScreen() {
     </Layout>
   );
 }
+// arrow fun returns promise, serverside rendering: false
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });

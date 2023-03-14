@@ -1,9 +1,14 @@
+import Cookies from 'js-cookie';
 import { createContext, useReducer } from 'react';
 
 export const Store = createContext();
 
 const initialState = {
-  cart: { cartItems: [] },
+  // If it does exist, use JSON that pass to convert this string to a JavaScript object because in the cookies
+
+  cart: Cookies.get('cart')
+    ? JSON.parse(Cookies.get('cart'))
+    : { cartItems: [] },
 };
 
 function reducer(state, action) {
@@ -23,7 +28,9 @@ function reducer(state, action) {
           )
         : //   deconstract items in the cart and push newItem to the end of the cart
           [...state.cart.cartItems, newItem];
+      Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
       //   keep the prev state, keep the prev values in the cart, then return updated cartItems
+      // So we are searching the cookies for cart key.
       return { ...state, cart: { ...state.cart, cartItems } };
     }
     case 'CART_REMOVE_ITEM': {
@@ -33,6 +40,7 @@ function reducer(state, action) {
       );
       // then return previous state
       // in the cart key previous cart and then pass the cart item as a parameter.
+      Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
     default:
