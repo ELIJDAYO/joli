@@ -26,6 +26,15 @@ function reducer(state, action) {
       //   keep the prev state, keep the prev values in the cart, then return updated cartItems
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case 'CART_REMOVE_ITEM': {
+      const cartItems = state.cart.cartItems.filter(
+        // Based on this log of item and return all cart items except the item that we passed in the action that payload.
+        (item) => item.slug !== action.payload.slug
+      );
+      // then return previous state
+      // in the cart key previous cart and then pass the cart item as a parameter.
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
     default:
       return state;
   }

@@ -10,7 +10,7 @@ export default function ProductScreen() {
   // to access the context from StoreProvider
   // state contains cart and cartItems
   const { state, dispatch } = useContext(Store);
-
+  const router = useRouter();
   const { query } = useRouter();
   const { slug } = query;
   const product = data.products.find((x) => x.slug === slug);
@@ -31,6 +31,7 @@ export default function ProductScreen() {
     // product properties and qty field
     // add item to the cart
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    router.push('/cart');
   };
   return (
     // to get the product from url, routerHook
