@@ -1,20 +1,54 @@
 import Layout from 'components/Layout';
+import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 // Let's implement validation in the client site when we click on logging it, refresh the page.
 // But what we're going to do is to show error message to the user.
 // For this purpose, we are going to use React hook form.
 // It's a simple form validation with React Hook.
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { getError } from 'utils/error';
 
 export default function LoginScreen() {
+  // session hook from nextAuth and get the data and rename to session
+  const { data: session } = useSession();
+
+  const router = useRouter();
+  const { redirect } = router.query;
+
+  useEffect(() => {
+    /**
+     * If it does exist, it means that user logged in already.
+     * So when we do the sign in here automatically sign session that user will get new value.
+     */
+    if (session?.user) {
+      // And then here we need to redirect user to another page.
+      router.push(redirect || '/');
+    }
+  }, [router, session, redirect]);
+
   const {
     // check onSubmit which accepts params
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
-  const submitHandler = ({ email, password }) => {
-    console.log(email, password);
+  const submitHandler = async ({ email, password }) => {
+    try {
+      // So what we do is to pass email and pass four to the sign in function.
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+      if (result.error) {
+        toast.error(result.error);
+      }
+    } catch (err) {
+      toast.error(getError(err));
+    }
   };
   return (
     <Layout title="Login">
