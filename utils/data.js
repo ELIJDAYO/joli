@@ -1,4 +1,22 @@
+import bcrypt from 'bcryptjs';
 const data = {
+  /*for users and here is their admin user set name to john email to 
+  admin at sign example dot com for password.
+  Use decrypt package to encrypt the passport in the database so no one can access to the passport in*/
+  users: [
+    {
+      name: 'John',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: true,
+    },
+    {
+      name: 'Jane',
+      email: 'user@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       name: 'Free Shirt',
