@@ -12,7 +12,7 @@ export default function Layout({ title, children }) {
   // use youth hook, import it and get session and a status.
   const { status, data: session } = useSession();
 
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
   // after rendering the page the update cart items coutns and change the value in the header
@@ -63,29 +63,43 @@ export default function Layout({ title, children }) {
                   <Menu.Button className="text-blue-600">
                     {session.user.name}
                   </Menu.Button>
-                  {/* When I click on this button to show a dropdown, use menu items right after menu button, create menu */}
                   <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
                     <Menu.Item>
-                      <DropdownLink className="dropdown-link" href="/profile">
-                        Profile
-                      </DropdownLink>
+                      {({ active }) => (
+                        <a
+                          className={`${
+                            active ? 'bg-blue-500' : 'bg-white text-black'
+                          }`}
+                          href="/profile"
+                        >
+                          Profile&nbsp;
+                        </a>
+                      )}
                     </Menu.Item>
                     <Menu.Item>
-                      <DropdownLink
-                        className="dropdown-link"
-                        href="/order-history"
-                      >
-                        Order History
-                      </DropdownLink>
+                      {({ active }) => (
+                        <a
+                          className={`${
+                            active ? 'bg-blue-500' : 'bg-white text-black'
+                          }`}
+                          href="/order-history"
+                        >
+                          Order History&nbsp;
+                        </a>
+                      )}
                     </Menu.Item>
                     <Menu.Item>
-                      <a
-                        className="dropdown-link"
-                        href="#"
-                        onClick={logoutClickHandler}
-                      >
-                        Logout
-                      </a>
+                      {({ active }) => (
+                        <a
+                          className={`${
+                            active ? 'bg-blue-500' : 'bg-white text-black'
+                          }`}
+                          href="#"
+                          onClick={logoutClickHandler}
+                        >
+                          Logout&nbsp;
+                        </a>
+                      )}
                     </Menu.Item>
                   </Menu.Items>
                 </Menu>

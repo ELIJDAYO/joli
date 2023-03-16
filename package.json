@@ -9,9 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.13",
+    "@headlessui/react": "^0.0.0-insiders.fb612f7",
     "@heroicons/react": "^1.0.6",
     "@next/font": "13.2.4",
+    "axios": "^1.3.4",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "eslint": "8.36.0",
