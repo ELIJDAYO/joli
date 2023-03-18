@@ -8,7 +8,8 @@ const initialState = {
 
   cart: Cookies.get('cart')
     ? JSON.parse(Cookies.get('cart'))
-    : { cartItems: [] },
+    : /**If you are getting this error to get rid of it, just click here, click on cookies, remove the cookie, */
+      { cartItems: [], shippingAddress: {} },
 };
 
 function reducer(state, action) {
@@ -50,6 +51,22 @@ function reducer(state, action) {
           cartItems: [],
           shippingAddress: { location: {} },
           paymentMethod: '',
+        },
+      };
+    // case for saving shipping address in the reducer.
+    case 'SAVE_SHIPPING_ADDRESS':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: {
+            // We keep the previous data in the shipping address as they are, but we merge the address in the payload
+
+            // So the update, the shipping address fails by the data in the payload and the data in the payload is
+            // coming from the shipping form.
+            ...state.cart.shippingAddress,
+            ...action.payload,
+          },
         },
       };
     default:

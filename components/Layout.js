@@ -6,7 +6,6 @@ import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Store } from 'utils/Store';
-import DropdownLink from './DropdownLink';
 
 export default function Layout({ title, children }) {
   // use youth hook, import it and get session and a status.
@@ -115,7 +114,7 @@ export default function Layout({ title, children }) {
           {children}
         </main>
         <footer className="flex h-10 justify-center items-center shadow-inner text-black">
-          <p>Copyright © 2022 Amazona</p>
+          <p>Copyright © 2022 Joli</p>
         </footer>
       </div>
     </>
