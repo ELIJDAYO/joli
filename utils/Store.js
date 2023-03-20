@@ -69,6 +69,9 @@ function reducer(state, action) {
           },
         },
       };
+    case 'CART_CLEAR_ITEMS':
+      // Keep the card and set cart items to empty array.
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
     case 'SAVE_PAYMENT_METHOD':
       return {
         ...state,

@@ -86,3 +86,5 @@ Redirect user to their shipping address. */
     </Layout>
   );
 }
+// make this authenticated.
+PaymentScreen.auth = true;
