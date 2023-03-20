@@ -32,6 +32,14 @@ async function disconnect() {
     }
   }
 }
+/**just return it simply that convert the mongoose object to plain
 
-const db = { connect, disconnect };
+JavaScript object and it can be serialized in the next.*/
+function convertDocToObj(doc) {
+  doc._id = doc._id.toString();
+  doc.createdAt = doc.createdAt.toString();
+  doc.updatedAt = doc.updatedAt.toString();
+  return doc;
+}
+const db = { connect, disconnect, convertDocToObj };
 export default db;

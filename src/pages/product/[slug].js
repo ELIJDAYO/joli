@@ -1,28 +1,35 @@
+import axios from 'axios';
 import Layout from 'components/Layout';
+import Product from 'models/Models';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
-import data from 'utils/data';
+import db from 'utils/db';
 import { Store } from 'utils/Store';
-
-export default function ProductScreen() {
+/**Then go to the product screen at the beginning of a that is, get props in the product, the screen
+and from props, get the product.
+So there is no need to get the product from the data.js that you use, remove this lines */
+export default function ProductScreen(props) {
   // to access the context from StoreProvider
   // state contains cart and cartItems
+  const { product } = props;
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-  const { query } = useRouter();
-  const { slug } = query;
-  const product = data.products.find((x) => x.slug === slug);
   if (!product) {
-    return <div>Produt Not Found</div>;
+    // We can wrap it inside the layout like this and set title to product.
+    return <Layout title="Produt Not Found">Produt Not Found</Layout>;
   }
   // get dispatch from storeProvider for ADD_CART_ITEMS
-  const addToCartHandler = () => {
+  // Because I'm using a weight here, I need to change this function to a sync
+  const addToCartHandler = async () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-
-    if (product.countInStock < quantity) {
+    /**What I I'm going to do here is to send an Ajax request right here and check the container stock in the
+    database to make sure that we have this quantity in the backend API. 
+    Here we need to implement this API at this address a slash API slash product slash product ID.*/
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock < quantity) {
       alert('Sorry. Product is out of stock');
       return;
     }
@@ -84,4 +91,20 @@ export default function ProductScreen() {
       </div>
     </Layout>
   );
+}
+/**if I click on a product, the product in the product page is coming from data.js. */
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+
+  await db.connect();
+  /**on the product model and filter products based on this log in the URL, then use the clean to convert
+it to the JavaScript object and put it inside the props. */
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: product ? db.convertDocToObj(product) : null,
+    },
+  };
 }
