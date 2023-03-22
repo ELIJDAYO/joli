@@ -9,7 +9,6 @@ describe('contentful', () => {
         limit: 12,
       });
 
-
     await expect(response.items).toBeDefined();
   })
 })

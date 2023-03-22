@@ -1,5 +1,10 @@
 name: "Unit Test"
 
+env:
+  CONTENTFUL_TOKEN: 9f-XGKwmXr533vwCzH0ae7splSEDFv7pW2XZlYvoceE
+  CONTENTFUL_SPACE: zp1ezqte84g5
+  MONGODB_URI: mongodb+srv://amazona:GXv15QKXZC7iMfSe@cluster0.9fhufmm.mongodb.net/amazona?retryWrites=true&w=majority
+
 on:
   push:
   pull_request:
