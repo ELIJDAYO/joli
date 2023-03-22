@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: "npm install"
       run: |
-        npm install
+        npm dir
     - name: "npm test"
       run: |
         npm test
