@@ -6,11 +6,7 @@ on:
 jobs:
   build:
     
-    runs-on: ${{ matrix.os }}-latest
-    
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: windows-latest
     
     steps:
     - name: "npm test"
