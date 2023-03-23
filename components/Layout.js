@@ -114,7 +114,7 @@ export default function Layout({ title, children }) {
           {children}
         </main>
         <footer className="flex h-10 justify-center items-center shadow-inner text-black">
-          <p>Copyright © 2022 Joli</p>
+          <p>Copyright © 2023 Joli</p>
         </footer>
       </div>
     </>

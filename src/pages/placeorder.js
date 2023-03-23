@@ -6,7 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getError } from 'utils/error';
 import { Store } from 'utils/Store';
 
@@ -22,7 +23,7 @@ export default function PlaceOrderScreen() {
     item dot quantity multiply by current item dot price and the default item for accumulator is zero. */
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
-  // If the item price is greater than $200, it's free.
+  // If the item price is greater than ₱200, it's free.
   const shippingPrice = itemsPrice > 200 ? 0 : 15;
   const taxPrice = round2(itemsPrice * 0.12);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
@@ -71,6 +72,7 @@ export default function PlaceOrderScreen() {
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
+      <ToastContainer />;
     }
   };
 
