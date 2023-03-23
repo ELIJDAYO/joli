@@ -3,7 +3,8 @@ import Layout from 'components/Layout';
 import ProductItem from 'components/ProductItems';
 import Product from 'models/Models';
 import { useContext } from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import db from 'utils/db';
 import { Store } from 'utils/Store';
 // import data from '/utils/data';
@@ -19,11 +20,14 @@ If I click Add to Cart, it doesn't work. */
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
-      return toast.error('Sorry. Product is out of stock');
+      // return
+      toast.error('Sorry. Product is out of stock');
+      <ToastContainer />;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
 
     toast.success('Product added to the cart');
+    <ToastContainer />;
   };
 
   return (

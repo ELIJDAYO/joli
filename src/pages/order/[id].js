@@ -1,9 +1,13 @@
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import Layout from 'components/Layout';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { getError } from 'utils/error';
 
 function reducer(state, action) {
@@ -17,12 +21,26 @@ function reducer(state, action) {
       return { ...state, loading: false, order: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+    // it happens when I'm going to update a state of payment of current order in the backend.
+    case 'PAY_REQUEST':
+      return { ...state, loadingPay: true };
+    // When I updated this state of payment
+    case 'PAY_SUCCESS':
+      return { ...state, loadingPay: false, successPay: true };
+    case 'PAY_FAIL':
+      return { ...state, loadingPay: false, errorPay: action.payload };
+    case 'PAY_RESET':
+      return { ...state, loadingPay: false, successPay: false, errorPay: '' };
     default:
       state;
   }
 }
 function OrderScreen() {
   // order/:id
+
+  // use PayPal dispatch to reset the options and set the client I.D. for PayPal. go to the useEffect.
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
   const { query } = useRouter();
   const orderId = query.id;
   /** first parameter is the reducer function.
@@ -30,13 +48,14 @@ function OrderScreen() {
     Second parameter is default value. 
     second thing that we are going to get from the reducer hook is dispatch to dispatch actions.
     */
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
-    // we load data on page load. So I set loading to true.
-    loading: true,
-    //  to get the order. So I set the order to empty object
-    order: {},
-    error: '',
-  });
+  const [{ loading, error, order, successPay, loadingPay }, dispatch] =
+    useReducer(reducer, {
+      // we load data on page load. So I set loading to true.
+      loading: true,
+      //  to get the order. So I set the order to empty object
+      order: {},
+      error: '',
+    });
   /** define the use effect because I'm going to send an AJAX request to backend on page load. */
   useEffect(() => {
     const fetchOrder = async () => {
@@ -52,13 +71,34 @@ function OrderScreen() {
     };
     if (
       !order._id ||
+      successPay ||
       // It means that we have order. But it's about the previously visited order ID.
       (order._id && order._id !== orderId)
     ) {
+      // to update the state of the order based on the latest data from back end
       fetchOrder();
+      if (successPay) {
+        dispatch({ type: 'PAY_RESET' });
+      }
+    } else {
+      // to load this script, reset the options and what they're going to do in the load.
+      const loadPaypalScript = async () => {
+        //  get the client idea from their backend.
+        const { data: clientId } = await axios.get('/api/keys/paypal');
+        // set the client ID for the PayPal script and set the currency to the currency that you want to have
+        paypalDispatch({
+          type: 'resetOptions',
+          value: {
+            'client-id': clientId,
+            currency: 'PHP',
+          },
+        });
+        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+      };
+      loadPaypalScript();
     }
     // If there is a change in the orderId, useEffect runs again.
-  }, [order, orderId]);
+  }, [order, orderId, paypalDispatch, successPay]);
   const {
     shippingAddress,
     paymentMethod,
@@ -72,7 +112,51 @@ function OrderScreen() {
     isDelivered,
     deliveredAt,
   } = order;
+  function createOrder(data, actions) {
+    return actions.order
+      .create(
+        // pass param p_units
+        {
+          purchase_units: [
+            // object
+            {
+              amount: { value: totalPrice },
+            },
+          ],
+        }
+      )
+      .then((orderID) => {
+        return orderID;
+      });
+  }
 
+  function onApprove(data, actions) {
+    /**So what this function does is to confirm the payment, commits the payments, complete the
+     * payment and it returns a promise. */
+    return actions.order.capture().then(async function (details) {
+      // get the details here.
+      // update the state of order in the backend.
+      try {
+        dispatch({ type: 'PAY_REQUEST' });
+        const { data } = await axios.put(
+          `/api/orders/${order._id}/pay`,
+          // Pass the details from the paypal
+          details
+        );
+        dispatch({ type: 'PAY_SUCCESS', payload: data });
+        toast.success('Order is paid successgully');
+        <ToastContainer />;
+      } catch (err) {
+        dispatch({ type: 'PAY_FAIL', payload: getError(err) });
+        toast.error(getError(err));
+        <ToastContainer />;
+      }
+    });
+  }
+  function onError(err) {
+    toast.error(getError(err));
+    <ToastContainer />;
+  }
   return (
     /** use layouts inside a return function use layouts and the title of this page is Order */
     <Layout title={`Order ${orderId}`}>
@@ -179,6 +263,23 @@ function OrderScreen() {
                     <div>₱{totalPrice}</div>
                   </div>
                 </li>
+                {!isPaid && (
+                  <li>
+                    {/*Is pending is a variable that check loading of PayPal script in the web application.  */}
+                    {isPending ? (
+                      <div>Loading...</div>
+                    ) : (
+                      <div className="w-full">
+                        <PayPalButtons
+                          createOrder={createOrder}
+                          onApprove={onApprove}
+                          onError={onError}
+                        ></PayPalButtons>
+                      </div>
+                    )}
+                    {loadingPay && <div>Loading...</div>}
+                  </li>
+                )}
               </ul>
             </div>
           </div>
