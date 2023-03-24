@@ -65,31 +65,31 @@ export default function Layout({ title, children }) {
                   <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
+                        <Link
                           className={`${
                             active ? 'bg-blue-500' : 'bg-white text-black'
                           }`}
                           href="/profile"
                         >
                           Profile&nbsp;
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
+                        <Link
                           className={`${
                             active ? 'bg-blue-500' : 'bg-white text-black'
                           }`}
                           href="/order-history"
                         >
                           Order History&nbsp;
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
+                        <Link
                           className={`${
                             active ? 'bg-blue-500' : 'bg-white text-black'
                           }`}
@@ -97,7 +97,7 @@ export default function Layout({ title, children }) {
                           onClick={logoutClickHandler}
                         >
                           Logout&nbsp;
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                   </Menu.Items>
