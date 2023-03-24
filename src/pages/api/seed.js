@@ -1,3 +1,4 @@
+import Product from 'models/Models';
 import User from 'models/Users';
 import data from 'utils/data';
 import db from 'utils/db';
@@ -9,6 +10,9 @@ const handler = async (req, res) => {
   /*We are going to add sample users, but where is the source of that user?
 It's coming from data in their utils folder and the users in the data.*/
   await User.insertMany(data.users);
+
+  await Product.deleteMany();
+  await Product.insertMany(data.products);
   await db.disconnect();
   res.send({ message: 'seeded successfully' });
 };

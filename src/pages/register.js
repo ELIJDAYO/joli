@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getError } from 'utils/error';
 
 export default function LoginScreen() {
@@ -133,8 +134,8 @@ export default function LoginScreen() {
           <button className="primary-button">Register</button>
         </div>
         <div className="mb-4 ">
-          Don&apos;t have an account? &nbsp;
-          <Link href={`/register?redirect=${redirect || '/'}`}>Register</Link>
+          Have an account? &nbsp;
+          <Link href={`/login?redirect=${redirect || '/'}`}>Login</Link>
         </div>
       </form>
     </Layout>

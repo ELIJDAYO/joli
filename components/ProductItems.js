@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-export default function ProductItem({ product }) {
+export default function ProductItem({ product, addToCartHandler }) {
   return (
     <div className="card">
       {/* A Slug is the unique identifying part of a web address, typically at the end of the URL.  */}
@@ -18,8 +18,12 @@ export default function ProductItem({ product }) {
           <h2 className="text-lg">{product.name}</h2>
         </Link>
         <p className="mb-2">{product.brand}</p>
-        <p>${product.price}</p>
-        <button className="primary-button" type="button">
+        <p>₱{product.price}</p>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={() => addToCartHandler(product)}
+        >
           Add to cart
         </button>
       </div>

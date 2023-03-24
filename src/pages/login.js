@@ -8,7 +8,8 @@ import { useEffect } from 'react';
 // For this purpose, we are going to use React hook form.
 // It's a simple form validation with React Hook.
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getError } from 'utils/error';
 
 export default function LoginScreen() {
@@ -45,9 +46,11 @@ export default function LoginScreen() {
       });
       if (result.error) {
         toast.error(result.error);
+        <ToastContainer />;
       }
     } catch (err) {
       toast.error(getError(err));
+      <ToastContainer />;
     }
   };
   return (

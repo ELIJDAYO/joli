@@ -8,6 +8,8 @@ import { Store } from 'utils/Store';
 // the server the cookie contains no item in the cart, but in the client the cookie contained that.
 // So to fix this issue, go to the cart page here and render this as client side component.
 import dynamic from 'next/dynamic';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 // export default function CartScreen() {
 function CartScreen() {
   const router = useRouter();
@@ -18,11 +20,17 @@ function CartScreen() {
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
-  const updateCartHandler = (item, qty) => {
+  const updateCartHandler = async (item, qty) => {
     // input newQuantity
     const quantity = Number(qty);
+    /**After getting the quantity, I need to have a check here. */
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      return toast.error('Sorry. Product is out of stock');
+    }
     // keep other properties of an item?
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    toast.success('Product updated in the cart');
   };
   return (
     <Layout title="Shopping Cart">
@@ -79,7 +87,7 @@ function CartScreen() {
                         ))}
                       </select>
                     </td>{' '}
-                    <td className="p-5 text-right">${item.price}</td>
+                    <td className="p-5 text-right">₱{item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
                         <XCircleIcon className="h-5 w-5"></XCircleIcon>
@@ -94,7 +102,7 @@ function CartScreen() {
             <ul>
               <li>
                 <div className="pb-3 text-xl">
-                  Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : $
+                  Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : ₱
                   {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                 </div>
               </li>

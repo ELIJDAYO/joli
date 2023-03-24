@@ -28,7 +28,7 @@ export default function Layout({ title, children }) {
   return (
     <>
       <Head>
-        <title>{title ? title + ' - Amazona' : 'Amazona'}</title>
+        <title>{title ? title + ' - Joli' : 'Joli'}</title>
         <meta name="description" content="Ecommerce Website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -37,7 +37,7 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 items-center px-4 justify-between shadow-md">
             <Link href="/" className="text-lg font-bold text-black">
-              amazona
+              Joli
             </Link>
             <div>
               <Link href="/cart" className="p-2 text-black">
@@ -65,31 +65,31 @@ export default function Layout({ title, children }) {
                   <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
+                        <Link
                           className={`${
                             active ? 'bg-blue-500' : 'bg-white text-black'
                           }`}
                           href="/profile"
                         >
                           Profile&nbsp;
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
+                        <Link
                           className={`${
                             active ? 'bg-blue-500' : 'bg-white text-black'
                           }`}
                           href="/order-history"
                         >
                           Order History&nbsp;
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
+                        <Link
                           className={`${
                             active ? 'bg-blue-500' : 'bg-white text-black'
                           }`}
@@ -97,7 +97,7 @@ export default function Layout({ title, children }) {
                           onClick={logoutClickHandler}
                         >
                           Logout&nbsp;
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                   </Menu.Items>
@@ -114,7 +114,7 @@ export default function Layout({ title, children }) {
           {children}
         </main>
         <footer className="flex h-10 justify-center items-center shadow-inner text-black">
-          <p>Copyright © 2022 Joli</p>
+          <p>Copyright © 2023 Joli</p>
         </footer>
       </div>
     </>

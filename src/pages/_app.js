@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { StoreProvider } from 'utils/Store';
@@ -11,13 +12,17 @@ export default function App({
     // We pass the session to the session provider and we can have session in all pages including log in.
     <SessionProvider session={session}>
       <StoreProvider>
-        {Component.auth ? (
-          <Auth>
+        {/* it's not going to load the paperless script and be loaded manually using the paypalDispatch in
+        the pages that we want. */}
+        <PayPalScriptProvider deferLoading={true}>
+          {Component.auth ? (
+            <Auth>
+              <Component {...pageProps} />
+            </Auth>
+          ) : (
             <Component {...pageProps} />
-          </Auth>
-        ) : (
-          <Component {...pageProps} />
-        )}{' '}
+          )}
+        </PayPalScriptProvider>
       </StoreProvider>
     </SessionProvider>
   );

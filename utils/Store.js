@@ -69,13 +69,27 @@ function reducer(state, action) {
           },
         },
       };
+    case 'CART_CLEAR_ITEMS':
+      // Keep the card and set cart items to empty array.
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
+    case 'SAVE_PAYMENT_METHOD':
+      return {
+        ...state,
+        /**That payment method, because it's a string, we don't use the carrier bracket
+         * like what we did for
+         * shipping gatherers. */
+        cart: {
+          ...state.cart,
+          paymentMethod: action.payload,
+        },
+      };
     default:
       return state;
   }
 }
 // create wrapper for all children then return
 export function StoreProvider({ children }) {
-  // define reduver hook
+  // define reducer hook
   const [state, dispatch] = useReducer(reducer, initialState);
   //   state is the cart and cartItems
   const value = { state, dispatch };
