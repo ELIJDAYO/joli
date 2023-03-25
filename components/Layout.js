@@ -88,6 +88,20 @@ export default function Layout({ title, children }) {
                           </Link>
                         )}
                       </Menu.Item>
+                      {session.user.isAdmin && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              className={`${
+                                active ? 'bg-blue-500' : 'bg-white text-black'
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              href="/admin/dashboard"
+                            >
+                              Admin Dashboard&nbsp;
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
                       <Menu.Item>
                         {({ active }) => (
                           <Link

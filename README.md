@@ -92,3 +92,16 @@
     1. create my order api
     2. create order history component
     3. fetch orders and display them
+    4. Publish On Vercel
+    5. create vercel account
+    6. connect to github
+    7. set next auth and mongodb db in env vars
+    8. push code to github
+25. Update User Profile
+    1. create profile screen
+    2. show user info
+    3. handle update user info
+26. Create Admin Dashboard
+    1. Create Admin Menu
+    2. create dashboard screen
+    3. Implement admin summary api
