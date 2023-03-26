@@ -1,3 +1,4 @@
+// admin/orders.js ==> admin/orders/index.js
 import Order from 'models/Order';
 import { getSession } from 'next-auth/react';
 import db from 'utils/db';

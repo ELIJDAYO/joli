@@ -1,6 +1,7 @@
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import Layout from 'components/Layout';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -31,6 +32,19 @@ function reducer(state, action) {
       return { ...state, loadingPay: false, errorPay: action.payload };
     case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false, errorPay: '' };
+    // Changing State of deliver.
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false };
+    case 'DELIVER_RESET':
+      return {
+        ...state,
+        loadingDeliver: false,
+        successDeliver: false,
+      };
     default:
       state;
   }
@@ -38,6 +52,7 @@ function reducer(state, action) {
 function OrderScreen() {
   // order/:id
 
+  const { data: session } = useSession();
   // use PayPal dispatch to reset the options and set the client I.D. for PayPal. go to the useEffect.
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -48,15 +63,31 @@ function OrderScreen() {
     Second parameter is default value. 
     second thing that we are going to get from the reducer hook is dispatch to dispatch actions.
     */
-  const [{ loading, error, order, successPay, loadingPay }, dispatch] =
-    useReducer(reducer, {
-      // we load data on page load. So I set loading to true.
-      loading: true,
-      //  to get the order. So I set the order to empty object
-      order: {},
-      error: '',
-    });
-  /** define the use effect because I'm going to send an AJAX request to backend on page load. */
+  const [
+    {
+      loading,
+      error,
+      order,
+      successPay,
+      loadingPay,
+      loadingDeliver,
+      successDeliver,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
+    // we load data on page load. So I set loading to true.
+    loading: true,
+    //  to get the order. So I set the order to empty object
+    order: {},
+    error: '',
+  });
+  /** define the use effect because I'm going to send an AJAX request to backend on page load.
+   * if condition inside use effect to update the state of order.
+   * Then we successfully pay the order or deliver the order.
+   *
+   *
+   * if I refresh the page. IsDelivered is updated. Let's fix this issue by updating the dependency array
+   */
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -72,6 +103,7 @@ function OrderScreen() {
     if (
       !order._id ||
       successPay ||
+      successDeliver ||
       // It means that we have order. But it's about the previously visited order ID.
       (order._id && order._id !== orderId)
     ) {
@@ -79,6 +111,9 @@ function OrderScreen() {
       fetchOrder();
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });
+      }
+      if (successDeliver) {
+        dispatch({ type: 'DELIVER_RESET' });
       }
     } else {
       // to load this script, reset the options and what they're going to do in the load.
@@ -98,7 +133,7 @@ function OrderScreen() {
       loadPaypalScript();
     }
     // If there is a change in the orderId, useEffect runs again.
-  }, [order, orderId, paypalDispatch, successPay]);
+  }, [order, orderId, paypalDispatch, successDeliver, successPay]);
   const {
     shippingAddress,
     paymentMethod,
@@ -156,6 +191,23 @@ function OrderScreen() {
   function onError(err) {
     toast.error(getError(err));
     <ToastContainer />;
+  }
+  // to implement this scroll down
+  async function deliverOrderHandler() {
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' });
+      // The payload for this request is empty object
+      // put because we are going to edit current order in back end and change the status of is delivered to true
+      const { data } = await axios.put(
+        `/api/admin/orders/${order._id}/deliver`,
+        {}
+      );
+      dispatch({ type: 'DELIVER_SUCCESS', payload: data });
+      toast.success('Order is delivered');
+    } catch (err) {
+      dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
+      toast.error(getError(err));
+    }
   }
   return (
     /** use layouts inside a return function use layouts and the title of this page is Order */
@@ -278,6 +330,18 @@ function OrderScreen() {
                       </div>
                     )}
                     {loadingPay && <div>Loading...</div>}
+                  </li>
+                )}
+                {/* scroll up to implement */}
+                {session.user.isAdmin && order.isPaid && !order.isDelivered && (
+                  <li>
+                    {loadingDeliver && <div>Loading...</div>}
+                    <button
+                      className="primary-button w-full"
+                      onClick={deliverOrderHandler}
+                    >
+                      Deliver Order
+                    </button>
                   </li>
                 )}
               </ul>
