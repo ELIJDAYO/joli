@@ -12,8 +12,9 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import db from 'utils/db';
 
 export default NextAuth({
+  // We are going to authenticate user using JWT strategy, so set the session inside that.
+
   session: {
-    // We are going to authenticate user using JWT strategy, so set the session inside that.
     strategy: 'jwt',
   },
   callbacks: {
@@ -37,9 +38,6 @@ or Google log in.
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        /**So what we did here is to connect to the database, get the user
-         * from the database using find one method
-         * on the user model in Mongo and then disconnect. */
         await db.connect();
         const user = await User.findOne({
           email: credentials.email,
