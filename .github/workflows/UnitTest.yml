@@ -11,9 +11,33 @@ on:
   pull_request:
     
 jobs:
-  build:
+  build-windows:
     
     runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: "npm test"
+      working-directory: "./"
+      run: |
+        npm install
+        npm test
+  
+  build-macos:
+    
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: "npm test"
+      working-directory: "./"
+      run: |
+        npm install
+        npm test
+  
+  build-ubuntu:
+    
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
