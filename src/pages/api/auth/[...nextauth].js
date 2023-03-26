@@ -12,7 +12,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import db from 'utils/db';
 
 export default NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
   session: {
     // We are going to authenticate user using JWT strategy, so set the session inside that.
     strategy: 'jwt',
@@ -62,4 +61,5 @@ or Google log in.
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
 });
