@@ -16,7 +16,8 @@ export default function App({
         the pages that we want. */}
         <PayPalScriptProvider deferLoading={true}>
           {Component.auth ? (
-            <Auth>
+            <Auth adminOnly={Component.auth.adminOnly}>
+              {' '}
               <Component {...pageProps} />
             </Auth>
           ) : (
@@ -30,9 +31,9 @@ export default function App({
 /**It accept the children and inside this component we get thereafter from user out there and we use you
 session hook said the require two true so only logged in user can access to it and for unauthorized direct user to unauthorized page, 
 we need to implement it and set the message to locking required controls,*/
-function Auth({ children }) {
+function Auth({ children, adminOnly }) {
   const router = useRouter();
-  const { status } = useSession({
+  const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
       router.push('/unauthorized?message=login required');
@@ -41,6 +42,9 @@ function Auth({ children }) {
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
-
+  // It's coming from the properties of the Auth component or useSession.
+  if (adminOnly && !session.user.isAdmin) {
+    router.push('/unauthorized?message=admin login required');
+  }
   return children;
 }

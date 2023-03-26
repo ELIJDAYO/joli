@@ -62,44 +62,60 @@ export default function Layout({ title, children }) {
                   <Menu.Button className="text-blue-600">
                     {session.user.name}
                   </Menu.Button>
-                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          className={`${
-                            active ? 'bg-blue-500' : 'bg-white text-black'
-                          }`}
-                          href="/profile"
-                        >
-                          Profile&nbsp;
-                        </Link>
+                  <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="px-1 py-1 ">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            className={`${
+                              active ? 'bg-blue-500' : 'bg-white text-black'
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            href="/profile"
+                          >
+                            Profile&nbsp;
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            className={`${
+                              active ? 'bg-blue-500' : 'bg-white text-black'
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            href="/order-history"
+                          >
+                            Order History&nbsp;
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      {session.user.isAdmin && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              className={`${
+                                active ? 'bg-blue-500' : 'bg-white text-black'
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              href="/admin/dashboard"
+                            >
+                              Admin Dashboard&nbsp;
+                            </Link>
+                          )}
+                        </Menu.Item>
                       )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          className={`${
-                            active ? 'bg-blue-500' : 'bg-white text-black'
-                          }`}
-                          href="/order-history"
-                        >
-                          Order History&nbsp;
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          className={`${
-                            active ? 'bg-blue-500' : 'bg-white text-black'
-                          }`}
-                          href="#"
-                          onClick={logoutClickHandler}
-                        >
-                          Logout&nbsp;
-                        </Link>
-                      )}
-                    </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            className={`${
+                              active ? 'bg-blue-500' : 'bg-white text-black'
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            href="#"
+                            onClick={logoutClickHandler}
+                          >
+                            Logout&nbsp;
+                          </Link>
+                        )}
+                      </Menu.Item>
+                    </div>
                   </Menu.Items>
                 </Menu>
               ) : (
