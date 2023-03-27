@@ -26,6 +26,12 @@ module.exports = {
   
       // Handle module aliases
       '^@/components/(.*)$': '<rootDir>/components/$1',
+
+      "^api/(.*)": "<rootDir>\\api\\$1",
+
+      "^models/(.*)": "<rootDir>\\models\\$1",
+
+      "^utils/(.*)": "<rootDir>\\utils\\$1",
     },
     // Add more setup options before each test is run
     // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
@@ -43,4 +49,10 @@ module.exports = {
     setupFiles: [
       "<rootDir>/dotenv-config.js"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "src",
+      "api"
+    ],
+    setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   }
