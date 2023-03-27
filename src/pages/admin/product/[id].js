@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getError } from 'utils/error';
 
 function reducer(state, action) {
@@ -15,6 +16,25 @@ function reducer(state, action) {
       return { ...state, loading: false, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+
+    case 'UPDATE_REQUEST':
+      return { ...state, loadingUpdate: true, errorUpdate: '' };
+    case 'UPDATE_SUCCESS':
+      return { ...state, loadingUpdate: false, errorUpdate: '' };
+    case 'UPDATE_FAIL':
+      return { ...state, loadingUpdate: false, errorUpdate: action.payload };
+
+    case 'UPLOAD_REQUEST':
+      return { ...state, loadingUpload: true, errorUpload: '' };
+    case 'UPLOAD_SUCCESS':
+      return {
+        ...state,
+        loadingUpload: false,
+        errorUpload: '',
+      };
+    case 'UPLOAD_FAIL':
+      return { ...state, loadingUpload: false, errorUpload: action.payload };
+
     default:
       return state;
   }
@@ -23,10 +43,11 @@ export default function AdminProductEditScreen() {
   // get the ID in the URL using use router.
   const { query } = useRouter();
   const productId = query.id;
-  const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
-    loading: true,
-    error: '',
-  });
+  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      error: '',
+    });
 
   const {
     register,
@@ -58,7 +79,38 @@ export default function AdminProductEditScreen() {
   }, [productId, setValue]);
   /**define useRouter hook and so we can use it to redirect user to another page. */
   const router = useRouter();
-
+  /**parameter event. It contains the file that we want to upload and the imageField by default. It is image. */
+  const uploadHandler = async (e, imageField = 'image') => {
+    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    try {
+      // dispatch upload requests to show a loading box.
+      dispatch({ type: 'UPLOAD_REQUEST' });
+      const {
+        // what we get from this API is signature and timestamp
+        data: { signature, timestamp },
+      } = await axios('/api/admin/cloudinary-sign');
+      /**Then get the file from the input box using the e.targeted files and create a form data object call append */
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('signature', signature);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      // form data contains the file that we are going to upload.
+      // The HTTP method for axios should be post because we are going to create a resource in the cloudinary backend.
+      // So by calling this API it returns the URL of the uploaded file in data and to access to that URL,
+      // we need to call. Use secure.URL field, then post this beautiful message.
+      const { data } = await axios.post(url, formData);
+      dispatch({ type: 'UPLOAD_SUCCESS' });
+      setValue(imageField, data.secure_url);
+      toast.success('File uploaded successfully');
+      <ToastContainer />;
+    } catch (err) {
+      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
+      toast.error(getError(err));
+      <ToastContainer />;
+    }
+  };
   const submitHandler = async ({
     // The parameters for this function is an object that contains all fields that we have registered inside the. Input boxes.
     name,
@@ -182,6 +234,19 @@ export default function AdminProductEditScreen() {
                 {errors.image && (
                   <div className="text-red-500">{errors.image.message}</div>
                 )}
+              </div>
+              {/* margin button 4 */}
+              <div className="mb-4">
+                <label htmlFor="imageFile">Upload image</label>
+                {/* and create input box of type file. */}
+                <input
+                  type="file"
+                  className="w-full"
+                  id="imageFile"
+                  onChange={uploadHandler}
+                />
+
+                {loadingUpload && <div>Uploading....</div>}
               </div>
               <div className="mb-4">
                 <label htmlFor="category">category</label>
