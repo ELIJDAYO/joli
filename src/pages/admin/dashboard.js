@@ -99,6 +99,10 @@ function AdminDashboardScreen() {
             <li>
               <Link href="/admin/users">Users</Link>
             </li>
+            <li>
+              <Link href="/admin/auyf89h2hqqfryhaidjs8ayfca0f0123ASD9fasfnCoFIAso0iahdfw874ehiufhnasUHSUAHPUFDAGHF7gafdhsaBFDayuOFS8GAHSFYUgvwao37rfgASFgcAUISFh984798y389YUsyh98PGFHSUgg3r7fpgGAGHUDFh9p83yhfa">
+                Contentful Data Loader</Link>
+            </li>
           </ul>
         </div>
         {/* So one of four is for menu and three of four is for the main contents for dashboard. */}
