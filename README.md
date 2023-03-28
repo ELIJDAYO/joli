@@ -131,7 +131,13 @@
     3. create upload api
     4. upload files in edit page
 33. Create And Delete Products
+
     1. add create product button
     2. build new product api
     3. add handler for delete
     4. implement delete api
+
+34. Create Search Page
+    1. create filters
+    2. list products
+    3. show filters
