@@ -44,6 +44,7 @@ export async function getServerSideProps () {
             numReviews: 0, //Default value
             countInStock: 0, //Default value
             description: "N/A", //Default value
+            visible: false, //Default value
         });
 
         products.push(tempProd);

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AdminSidebar from 'components/AdminSidebar';
 import Layout from 'components/Layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -148,24 +149,7 @@ export default function AdminProductEditScreen() {
   return (
     <Layout title={`Edit Product ${productId}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
-        <div>
-          <ul>
-            <li>
-              <Link href="/admin/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link href="/admin/orders">Orders</Link>
-            </li>
-            <li>
-              <Link href="/admin/products" className="font-bold">
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin/users">Users</Link>
-            </li>
-          </ul>
-        </div>
+        <AdminSidebar CurrentPage="Products"/>
         <div className="md:col-span-3">
           {loading ? (
             <div>Loading...</div>
@@ -293,7 +277,7 @@ export default function AdminProductEditScreen() {
                 )}
               </div>
               <div className="mb-4">
-                <label htmlFor="countInStock">description</label>
+                <label htmlFor="description">description</label>
                 <input
                   type="text"
                   className="w-full"

@@ -127,6 +127,7 @@ export default function AdminProdcutsScreen() {
                     <th className="p-5 text-left">CATEGORY</th>
                     <th className="p-5 text-left">COUNT</th>
                     <th className="p-5 text-left">RATING</th>
+                    <th className="p-5 text-left">VISIBLE?</th>
                     <th className="p-5 text-left">ACTIONS</th>
                   </tr>
                 </thead>
@@ -139,6 +140,7 @@ export default function AdminProdcutsScreen() {
                       <td className=" p-5 ">{product.category}</td>
                       <td className=" p-5 ">{product.countInStock}</td>
                       <td className=" p-5 ">{product.rating}</td>
+                      <td className=" p-5 ">{product.visible ? "Yes" : "No"}</td>
                       <td className=" p-5 ">
                         {/* make it possible for admin to edit or delete product? */}
                         <Link
