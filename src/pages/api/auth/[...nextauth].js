@@ -57,7 +57,7 @@ or Google log in.
         }
         throw new Error('Invalid email or password');
       },
+      secret: process.env.NEXTAUTH_SECRET,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
 });
