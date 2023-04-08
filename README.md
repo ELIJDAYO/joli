@@ -105,3 +105,39 @@
     1. Create Admin Menu
     2. create dashboard screen
     3. Implement admin summary api
+27. Create Admin Dashboard
+    1. Create Admin Menu
+    2. create dashboard screen
+    3. Implement admin summary api
+28. List Orders For Admin
+    1. create orders page
+    2. create orders api
+    3. use api in page
+29. Deliver Order For Admin
+    1. create deliver api
+    2. add deliver button
+    3. implement click handler
+30. List Products For Admin
+    1. create products page
+    2. create products api
+    3. use api in page
+31. Create Product Edit Page
+    1. create edit page
+    2. create api for product
+    3. show product data in form
+32. Upload Product Image
+    1. create cloudinary account
+    2. get cloudinary keys
+    3. create upload api
+    4. upload files in edit page
+33. Create And Delete Products
+
+    1. add create product button
+    2. build new product api
+    3. add handler for delete
+    4. implement delete api
+
+34. Create Search Page
+    1. create filters
+    2. list products
+    3. show filters
