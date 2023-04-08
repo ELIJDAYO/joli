@@ -59,5 +59,5 @@ or Google log in.
       },
     }),
   ],
-  secret: 'somethingsecret',
+  secret: process.env.NEXTAUTH_SECRET,
 });
