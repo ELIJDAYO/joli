@@ -19,7 +19,7 @@ const AdminSidebar = ({ CurrentPage }) => {
               <Link href="/admin/users" className={CurrentPage == "Users" ? "font-bold" : ""}>Users</Link>
             </li>
             <li>
-              <Link href="/admin/auyf89h2hqqfryhaidjs8ayfca0f0123ASD9fasfnCoFIAso0iahdfw874ehiufhnasUHSUAHPUFDAGHF7gafdhsaBFDayuOFS8GAHSFYUgvwao37rfgASFgcAUISFh984798y389YUsyh98PGFHSUgg3r7fpgGAGHUDFh9p83yhfa">
+              <Link href="/admin/au9fhpwe923rifisjfcdsnaojd0p9q">
                 Contentful Data Loader</Link>
             </li>
           </ul>

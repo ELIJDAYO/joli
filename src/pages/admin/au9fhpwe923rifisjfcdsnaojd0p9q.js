@@ -3,7 +3,7 @@ import Product from "models/Models";
 import { useEffect } from "react";
 import db from "utils/db";
 
-const auyf89h2hqqfryhaidjs8ayfca0f0123ASD9fasfnCoFIAso0iahdfw874ehiufhnasUHSUAHPUFDAGHF7gafdhsaBFDayuOFS8GAHSFYUgvwao37rfgASFgcAUISFh984798y389YUsyh98PGFHSUgg3r7fpgGAGHUDFh9p83yhfa = () => {
+const au9fhpwe923rifisjfcdsnaojd0p9q = () => {
     useEffect(() => {
         window.location.href = "/admin/products";
     }, []);
@@ -13,9 +13,9 @@ const auyf89h2hqqfryhaidjs8ayfca0f0123ASD9fasfnCoFIAso0iahdfw874ehiufhnasUHSUAHP
     );
 }
 
-export default auyf89h2hqqfryhaidjs8ayfca0f0123ASD9fasfnCoFIAso0iahdfw874ehiufhnasUHSUAHPUFDAGHF7gafdhsaBFDayuOFS8GAHSFYUgvwao37rfgASFgcAUISFh984798y389YUsyh98PGFHSUgg3r7fpgGAGHUDFh9p83yhfa;
+export default au9fhpwe923rifisjfcdsnaojd0p9q;
 
-auyf89h2hqqfryhaidjs8ayfca0f0123ASD9fasfnCoFIAso0iahdfw874ehiufhnasUHSUAHPUFDAGHF7gafdhsaBFDayuOFS8GAHSFYUgvwao37rfgASFgcAUISFh984798y389YUsyh98PGFHSUgg3r7fpgGAGHUDFh9p83yhfa.auth = {adminOnly: true}
+au9fhpwe923rifisjfcdsnaojd0p9q.auth = {adminOnly: true}
 
 export async function getServerSideProps () {
     
