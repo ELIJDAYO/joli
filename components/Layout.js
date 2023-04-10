@@ -46,8 +46,8 @@ export default function Layout({ title, children }) {
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
       <div className="flex min-h-screen flex-col justify-between bg-white">
-        <header>
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md">
+        <header className="bg-gradient-to-r from-cyan-500 to-blue-500">
+          <nav className="flex h-12 items-center px-4 justify-between shadow-md ">
             <Link href="/" className="text-lg font-bold text-black">
               Joli
             </Link>
@@ -157,7 +157,7 @@ export default function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-4 px-4 text-black">
+        <main className="container m-auto mt-4 px-5 text-black ">
           {children}
         </main>
         <footer className="flex h-10 justify-center items-center shadow-inner text-black">

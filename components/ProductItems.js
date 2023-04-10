@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function ProductItem({ product, addToCartHandler }) {
   return (
-    <div className="card">
+    <div className="card bg-white">
       {/* A Slug is the unique identifying part of a web address, typically at the end of the URL.  */}
       <Link href={`/product/${product.slug}`}>
         <img
