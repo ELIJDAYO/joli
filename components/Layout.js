@@ -69,12 +69,13 @@ export default function Layout({ title, children }) {
               >
                 <SearchIcon className="h-5 w-5"></SearchIcon>
               </button>
-            </form>
+            </form>  
             <div>
-              <Link href="/cart" className="p-2 text-black">
-                Cart
+
+              <Link href="/cart" className=" rounded bg-amber-300 py-1 px-2 text-sm dark:text-black">
+                CART     
                 {cartItemsCount > 0 && (
-                  <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
+                  <span className="rounded-full px-2 py-1 bg-red-600 text-xs font-bold text-white">
                     {/* accumulator + current item qty = sum of all qty in cart items*/}
                     {/* {cart.cartItems.reduce((a, c) => a + c.quantity, 0)} */}
                     {cartItemsCount}
