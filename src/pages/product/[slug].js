@@ -45,22 +45,23 @@ export default function ProductScreen(props) {
     // npm i -D @types/react
     <Layout title={product.name}>
       <div className="py-2">
-        <Link href="/">back to products</Link>
+      <Link type="button" class="text-black primary-button w-full0" href = "/"> 
+      Back to Products </Link>
       </div>
-      <div className="grid md:grid-cols-4 md:gap-">
-        <div className="md:col-span-2">
+      <div className="grid md:grid-cols-4 md:gap-10">
+        <div className="sm:col-span-2">
           <Image
             src={product.image}
             alt={product.name}
-            width={640}
-            height={640}
+            width={420}
+            height={420}
             layout="responsive"
           ></Image>
         </div>
-        <div className="px-2">
+        <div className='pl-5'>
           <ul>
             <li>
-              <h1 className="text-lg">{product.name}</h1>
+              <h1 className="mt-5 text-xl font-bold">{product.name}</h1>
             </li>
             <li>Category: {product.category}</li>
             <li>Brand: {product.brand}</li>
@@ -70,8 +71,8 @@ export default function ProductScreen(props) {
             <li>Description: {product.description}</li>
           </ul>
         </div>
-        <div>
-          <div className="card p-5">
+        <div className='mt-5 mr-5 pr-3'>
+          <div className="card p-3">
             <div className="mb-2 flex justify-between">
               <div>Price</div>
               <div>₱{product.price}</div>
@@ -84,7 +85,7 @@ export default function ProductScreen(props) {
               className="primary-button w-full"
               onClick={addToCartHandler}
             >
-              Add to cart
+              Add to Cart
             </button>
           </div>
         </div>

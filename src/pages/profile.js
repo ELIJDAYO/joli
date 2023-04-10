@@ -42,8 +42,8 @@ export default function ProfileScreen() {
        */
       const result = await signIn('credentials', {
         redirect: false,
-        email,
-        password,
+        email: email,
+        password: password,
       });
       toast.success('Profile updated successfully');
       <ToastContainer />;

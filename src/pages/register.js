@@ -37,8 +37,8 @@ export default function LoginScreen() {
 
       const result = await signIn('credentials', {
         redirect: false,
-        email,
-        password,
+        email: email,
+        password: password,
       });
       if (result.error) {
         toast.error(result.error);

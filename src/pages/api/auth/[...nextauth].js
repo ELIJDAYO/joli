@@ -35,6 +35,7 @@ export default NextAuth({
 So we are going to authenticate user based on the MongoDB database, not using GitHub authentication
 or Google log in. 
    */
+  secret: process.env.AUTH_SECRET,
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
@@ -59,5 +60,4 @@ or Google log in.
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
 });

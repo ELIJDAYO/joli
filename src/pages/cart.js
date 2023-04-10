@@ -9,7 +9,8 @@ import { Store } from 'utils/Store';
 // So to fix this issue, go to the cart page here and render this as client side component.
 import dynamic from 'next/dynamic';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // export default function CartScreen() {
 function CartScreen() {
   const router = useRouter();
@@ -31,6 +32,7 @@ function CartScreen() {
     // keep other properties of an item?
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
     toast.success('Product updated in the cart');
+    <ToastContainer />;
   };
   return (
     <Layout title="Shopping Cart">

@@ -41,8 +41,8 @@ export default function LoginScreen() {
       // So what we do is to pass email and pass four to the sign in function.
       const result = await signIn('credentials', {
         redirect: false,
-        email,
-        password,
+        email: email,
+        password: password,
       });
       if (result.error) {
         toast.error(result.error);
