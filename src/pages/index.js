@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import db from 'utils/db';
 import { Store } from 'utils/Store';
+
 // import data from '/utils/data';
 export default function Home({ products }) {
   const { state, dispatch } = useContext(Store);
