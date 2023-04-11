@@ -1,5 +1,5 @@
 {
-  "env": { "browser": true, "node": true, "es6": true },
+  "env": { "browser": true, "node": true, "es6": true, "jest": true },
   "extends": ["eslint:recommended", "next/core-web-vitals"],
   "parser": "@babel/eslint-parser"
 }
