@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AdminSidebar from 'components/AdminSidebar';
 import Layout from 'components/Layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -70,6 +71,7 @@ export default function AdminProductEditScreen() {
         setValue('brand', data.brand);
         setValue('countInStock', data.countInStock);
         setValue('description', data.description);
+        setValue('visible', data.visible);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -121,6 +123,7 @@ export default function AdminProductEditScreen() {
     brand,
     countInStock,
     description,
+    visible,
   }) => {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
@@ -134,6 +137,7 @@ export default function AdminProductEditScreen() {
         brand,
         countInStock,
         description,
+        visible,
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
       toast.success('Product updated successfully');
@@ -148,24 +152,7 @@ export default function AdminProductEditScreen() {
   return (
     <Layout title={`Edit Product ${productId}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
-        <div>
-          <ul>
-            <li>
-              <Link href="/admin/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link href="/admin/orders">Orders</Link>
-            </li>
-            <li>
-              <Link href="/admin/products" className="font-bold">
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin/users">Users</Link>
-            </li>
-          </ul>
-        </div>
+        <AdminSidebar CurrentPage="Products"/>
         <div className="md:col-span-3">
           {loading ? (
             <div>Loading...</div>
@@ -293,7 +280,7 @@ export default function AdminProductEditScreen() {
                 )}
               </div>
               <div className="mb-4">
-                <label htmlFor="countInStock">description</label>
+                <label htmlFor="description">description</label>
                 <input
                   type="text"
                   className="w-full"
@@ -307,6 +294,15 @@ export default function AdminProductEditScreen() {
                     {errors.description.message}
                   </div>
                 )}
+              </div>
+              <div className="mb-4">
+                <div>Visible?</div>
+                <input
+                  type="checkbox"
+                  className=""
+                  id="visible"
+                  {...register('visible')}
+                />
               </div>
               <div className="mb-4">
                 <button disabled={loadingUpdate} className="primary-button">
