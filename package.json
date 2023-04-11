@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "dependencies": {
     "@headlessui/react": "^0.0.0-insiders.fb612f7",
