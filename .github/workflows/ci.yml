@@ -20,7 +20,7 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
       - name: Run test
-        run: npm test a -- --coverage
+        run: npm test a -- --coverage q
         env:
           CI: true
       - name: Build project if push
