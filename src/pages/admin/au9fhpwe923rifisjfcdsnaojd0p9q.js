@@ -50,8 +50,6 @@ export async function getServerSideProps () {
         products.push(tempProd);
     });
 
-    console.log(products);
-
     //Upsert to MongoDB
     products.map(async (product) => {
         await product.save();
