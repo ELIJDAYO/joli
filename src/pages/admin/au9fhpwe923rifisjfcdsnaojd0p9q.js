@@ -1,6 +1,5 @@
 import { Client } from "api/contentful";
 import Product from "models/Models";
-import { useEffect } from "react";
 import db from "utils/db";
 
 const au9fhpwe923rifisjfcdsnaojd0p9q = () => {
@@ -57,4 +56,4 @@ export async function getServerSideProps () {
             ret: 0
         },
     };
-};
+}
