@@ -4,9 +4,7 @@ import { useEffect } from "react";
 import db from "utils/db";
 
 const au9fhpwe923rifisjfcdsnaojd0p9q = () => {
-    useEffect(() => {
-        window.location.href = "/admin/products";
-    }, []);
+    window.location.href = "/admin/products";
 
     return (
         <div>Loading Data...</div>
