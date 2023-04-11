@@ -1,17 +1,30 @@
 name: CI
 on:
   pull_request:
-    branches: [feature_branch]
-
+    branches: [feature_branch_for_deploy]
+  push:
+    branches: [feature_branch_for_deploy]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies, checkout codes
         uses: actions/checkout@v3
-      - name: Install NPM dependencies
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-key: |
+            ${{ runner.os }}-node-
+      - name: Install npm dependencies
         run: npm ci
       - name: Check code formatting
         run: npm run format:check
       - name: Run test
         run: run test -- --coverage
+        env:
+          CI: true
+      - name: Build project if push
+        if: github.event_name == 'push'
+        run: npm run build
