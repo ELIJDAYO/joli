@@ -71,6 +71,7 @@ export default function AdminProductEditScreen() {
         setValue('brand', data.brand);
         setValue('countInStock', data.countInStock);
         setValue('description', data.description);
+        setValue('visible', data.visible);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -122,6 +123,7 @@ export default function AdminProductEditScreen() {
     brand,
     countInStock,
     description,
+    visible,
   }) => {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
@@ -135,6 +137,7 @@ export default function AdminProductEditScreen() {
         brand,
         countInStock,
         description,
+        visible,
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
       toast.success('Product updated successfully');
@@ -291,6 +294,15 @@ export default function AdminProductEditScreen() {
                     {errors.description.message}
                   </div>
                 )}
+              </div>
+              <div className="mb-4">
+                <div>Visible?</div>
+                <input
+                  type="checkbox"
+                  className=""
+                  id="visible"
+                  {...register('visible')}
+                />
               </div>
               <div className="mb-4">
                 <button disabled={loadingUpdate} className="primary-button">
