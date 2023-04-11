@@ -46,8 +46,8 @@ export default function Layout({ title, children }) {
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
       <div className="flex min-h-screen flex-col justify-between bg-white">
-        <header>
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md">
+        <header className="bg-gradient-to-r from-cyan-500 to-blue-500">
+          <nav className="flex h-12 items-center px-4 justify-between shadow-md ">
             <Link href="/" className="text-lg font-bold text-black">
               Joli
             </Link>
@@ -71,15 +71,18 @@ export default function Layout({ title, children }) {
               </button>
             </form>
             <div>
-              <Link href="/cart" className="p-2 text-black">
-                Cart
+              <Link
+                href="/cart"
+                className=" rounded bg-amber-300 py-1 px-2 text-sm dark:text-black"
+              >
+                CART
                 {cartItemsCount > 0 && (
-                  <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
+                  <span className="rounded-full px-2 py-1 bg-red-600 text-xs font-bold text-white">
                     {/* accumulator + current item qty = sum of all qty in cart items*/}
                     {/* {cart.cartItems.reduce((a, c) => a + c.quantity, 0)} */}
                     {cartItemsCount}
                   </span>
-                )}{' '}
+                )}
               </Link>
 
               {/* If it's loading, show loading, let's put it inside parentheses.
@@ -90,7 +93,7 @@ export default function Layout({ title, children }) {
                 'Loading'
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-600">
+                  <Menu.Button className="text-yellow-100">
                     {session.user.name}
                   </Menu.Button>
                   <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">

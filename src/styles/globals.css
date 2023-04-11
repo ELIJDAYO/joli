@@ -97,7 +97,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-
+select {
+  background-color: #f8d23a;
+  color: black;
+}
 a {
   @apply text-blue-600 hover:text-blue-800;
 }
