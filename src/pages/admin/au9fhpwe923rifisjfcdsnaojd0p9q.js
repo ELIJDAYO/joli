@@ -19,7 +19,6 @@ export async function getServerSideProps () {
     
     const response = await Client.getEntries({
         content_type: "products",
-        limit: 1, //Remove this when testing is done
       });
     await db.connect();
 
