@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AdminSidebar from 'components/AdminSidebar';
 import Layout from 'components/Layout';
 import Link from 'next/link';
 import { router } from 'next/router';
@@ -97,24 +98,7 @@ export default function AdminProdcutsScreen() {
   return (
     <Layout title="Admin Products">
       <div className="grid md:grid-cols-4 md:gap-5">
-        <div>
-          <ul>
-            <li>
-              <Link href="/admin/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link href="/admin/orders">Orders</Link>
-            </li>
-            <li>
-              <Link href="/admin/products" className="font-bold">
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin/users">Users</Link>
-            </li>
-          </ul>
-        </div>
+        <AdminSidebar CurrentPage="Products"/>
         <div className="overflow-x-auto md:col-span-3">
           {/* the reason that I'm wrapping heading one inside this dev is to put a button next to products*/}
           <div className="flex justify-between">
@@ -143,6 +127,7 @@ export default function AdminProdcutsScreen() {
                     <th className="p-5 text-left">CATEGORY</th>
                     <th className="p-5 text-left">COUNT</th>
                     <th className="p-5 text-left">RATING</th>
+                    <th className="p-5 text-left">VISIBLE?</th>
                     <th className="p-5 text-left">ACTIONS</th>
                   </tr>
                 </thead>
@@ -155,6 +140,7 @@ export default function AdminProdcutsScreen() {
                       <td className=" p-5 ">{product.category}</td>
                       <td className=" p-5 ">{product.countInStock}</td>
                       <td className=" p-5 ">{product.rating}</td>
+                      <td className=" p-5 ">{product.visible ? "Yes" : "No"}</td>
                       <td className=" p-5 ">
                         {/* make it possible for admin to edit or delete product? */}
                         <Link
