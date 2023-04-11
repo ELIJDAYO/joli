@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AdminSidebar from 'components/AdminSidebar';
 import Layout from 'components/Layout';
 import Link from 'next/link';
 import { useEffect, useReducer } from 'react';
@@ -40,25 +41,7 @@ export default function AdminOrderScreen() {
   return (
     <Layout title="Admin Dashboard">
       <div className="grid md:grid-cols-4 md:gap-5">
-        <div>
-          <ul>
-            <li>
-              {/* codes from dashboard menu */}
-              <Link href="/admin/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link href="/admin/orders" className="font-bold">
-                Orders
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin/products">Products</Link>
-            </li>
-            <li>
-              <Link href="/admin/users">Users</Link>
-            </li>
-          </ul>
-        </div>
+        <AdminSidebar CurrentPage="Orders" />
         {/* Because I'm using a table to show a list of data, I'm going to make it possible for smaller screen
         to scroll vertically horizontally to see all columns of the table. */}
         <div className="overflow-x-auto md:col-span-3">

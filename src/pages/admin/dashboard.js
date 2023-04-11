@@ -13,6 +13,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import AdminSidebar from 'components/AdminSidebar';
 //  registering the chart
 ChartJS.register(
   CategoryScale,
@@ -82,25 +83,7 @@ function AdminDashboardScreen() {
     <Layout title="Admin Dashboard">
       {/* said the gap between grid to five  */}
       <div className="grid  md:grid-cols-4 md:gap-5">
-        <div>
-          {/* show them menus */}
-          <ul>
-            <li>
-              <Link href="/admin/dashboard" className="font-bold">
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin/orders">Orders</Link>
-            </li>
-            <li>
-              <Link href="/admin/products">Products</Link>
-            </li>
-            <li>
-              <Link href="/admin/users">Users</Link>
-            </li>
-          </ul>
-        </div>
+        <AdminSidebar CurrentPage="Dashboard"/>
         {/* So one of four is for menu and three of four is for the main contents for dashboard. */}
         <div className="md:col-span-3">
           <h1 className="mb-4 text-xl">Admin Dashboard</h1>

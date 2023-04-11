@@ -1,5 +1,7 @@
 name: Build Next.js web app
-on: push
+on:
+  push:
+    branches: [main]
 permissions:
   contents: 'read'
   id-token: 'write'

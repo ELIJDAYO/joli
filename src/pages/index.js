@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import db from 'utils/db';
 import { Store } from 'utils/Store';
+
 // import data from '/utils/data';
 export default function Home({ products }) {
   const { state, dispatch } = useContext(Store);
@@ -52,10 +53,17 @@ export async function getServerSideProps() {
   await db.connect();
   /**We just get the products info instead of metadata from Mongo's collection  */
   const products = await Product.find().lean();
+  const output = [];
+
+  products.map((product) => {
+    if(product.visible)
+      output.push(product);
+  });
+  
   return {
     // Define props object
     props: {
-      products: products.map(db.convertDocToObj),
+      products: output.map(db.convertDocToObj),
     },
   };
 }
