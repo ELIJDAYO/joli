@@ -49,7 +49,7 @@ export default function Layout({ title, children }) {
         <header className="bg-gradient-to-r from-cyan-500 to-blue-500">
           <nav className="flex h-12 items-center px-4 justify-between shadow-md ">
             <Link href="/" className="text-lg font-bold text-black">
-              Joli
+              Joli's
             </Link>
             <form
               onSubmit={submitHandler}
@@ -164,7 +164,7 @@ export default function Layout({ title, children }) {
           {children}
         </main>
         <footer className="flex h-10 justify-center items-center shadow-inner text-black">
-          <p>Copyright © 2023 Joli</p>
+          <p>Copyright © 2023 Joli's</p>
         </footer>
       </div>
     </>
