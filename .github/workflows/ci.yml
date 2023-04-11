@@ -21,7 +21,6 @@ jobs:
         run: npm ci
       - name: Run test
         run: npm test a -- --coverage
-        run: np
         env:
           CI: true
       - name: Build project if push
