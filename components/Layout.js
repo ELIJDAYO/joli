@@ -69,11 +69,13 @@ export default function Layout({ title, children }) {
               >
                 <SearchIcon className="h-5 w-5"></SearchIcon>
               </button>
-            </form>  
+            </form>
             <div>
-
-              <Link href="/cart" className=" rounded bg-amber-300 py-1 px-2 text-sm dark:text-black">
-                CART     
+              <Link
+                href="/cart"
+                className=" rounded bg-amber-300 py-1 px-2 text-sm dark:text-black"
+              >
+                CART
                 {cartItemsCount > 0 && (
                   <span className="rounded-full px-2 py-1 bg-red-600 text-xs font-bold text-white">
                     {/* accumulator + current item qty = sum of all qty in cart items*/}
@@ -91,7 +93,7 @@ export default function Layout({ title, children }) {
                 'Loading'
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-600">
+                  <Menu.Button className="text-blue-600 text-lime-50">
                     {session.user.name}
                   </Menu.Button>
                   <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
